@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder
+			class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<stackTrace>
+					<fieldName>stackTrace</fieldName>
+				</stackTrace>
+				<throwableRootCauseClassName>
+					<fieldName>rootCauseClassName</fieldName>
+				</throwableRootCauseClassName>
+				<throwableRootCauseMessage>
+					<fieldName>rootCauseMessage</fieldName>
+				</throwableRootCauseMessage>
+				<pattern>
+					<omitEmptyFields>true</omitEmptyFields>
+					<pattern>
+						{
+						"timestamp": "%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+						"applicationId": "COMMONAP",
+						"level": "%level",
+						"operatorId":
+						"%mdc{operatorId}",
+						"threadName": "%thread",
+						"trackId":
+						"%mdc{X-Track}",
+						"loggerClass": "%class",
+						"method":
+						"%method",
+						"row":
+						"%line",
+						"message": "%message"
+						}
+					</pattern>
+				</pattern>
+				<logLevelValue />
+			</providers>
+
+			<excludeKeyValueKeyName>callerFileName</excludeKeyValueKeyName>
+		</encoder>
+	</appender>
+
+	<!-- Application Loggers -->
+	<logger name="net.ouranos.bts.common" level="${LOG_LEVEL_APPLICATION:-info}" />
+
+	<logger name="net.ouranos.bts.common.domain.repository" level="${LOG_LEVEL_DOMAIN_REPOSITORY:-info}" />
+
+	<!-- TERASOLUNA -->
+	<logger name="org.terasoluna.gfw" level="info" />
+
+	<logger
+		name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor"
+		level="trace" />
+	<logger
+		name="org.terasoluna.gfw.common.exception.ExceptionLogger"
+		level="info" />
+
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework" level="warn" />
+
+	<logger name="org.springframework.web.servlet" level="info" />
+
+	<logger
+		name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"
+		level="trace" />
+
+	<!-- Logger for RestTemplate -->
+	<!-- For Apache HttpClient -->
+	<logger name="org.apache.http" level="${LOG_LEVEL_APACHE_HTTP:-info}" />
+
+	<!-- For RestTemplate built-in client (HttpURLConnection) -->
+	<logger name="sun.net.www.protocol.http.HttpURLConnection"
+		level="debug" />
+
+
+	<root level="${LOG_LEVEL:-info}">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
