@@ -36,7 +36,7 @@
 
 ### アプリケーション構成
 
-当アプリケーションは、Web UI (ouranos-ecosystem-sample-application-cfp-frontend, 以下 cfp-frontend)、リバースプロキシサーバ (ouranos-ecosystem-sample-application-cfp-proxy, 以下 cfp-proxy) およびAPサーバ (ouranos-ecosystem-sample-application-cfp-backend, 以下 cfp-backend) の併用が前提となる。
+当アプリケーションは、Web UI (sample-application-cfp-frontend, 以下 cfp-frontend)、リバースプロキシサーバ (sample-application-cfp-proxy, 以下 cfp-proxy) およびAPサーバ (sample-application-cfp-backend, 以下 cfp-backend) の併用が前提となる。
 本リポジトリでは cfp-backend を説明対象とし、cfp-frontend と cfp-proxy は別のリポジトリで提供する。
 
 <img alt="アプリケーション概要図" src="./docs/images/overview.png">
@@ -87,7 +87,7 @@
 # 当リポジトリのクローン
 mkdir -p ~/workspaces
 cd ~/workspaces
-git clone https://github.com/ouranos-ecosystem-interop-data-infra/ouranos-ecosystem-sample-application-cfp-backend.git cfp-backend
+git clone https://github.com/ouranos-ecosystem-idi/sample-application-cfp-backend.git cfp-backend
 ```
 
 ### ローカル環境でのビルド・起動
