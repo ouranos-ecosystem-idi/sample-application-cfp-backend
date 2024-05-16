@@ -237,37 +237,8 @@ http://terasolunaorg.github.io/guideline/current/ja/
 処理の全体像を把握するための概要を説明する。概要把握が目的であるため、シーケンス図は主要なクラスのみを記載している。
 
 ### リクエストバックエンド転送機能
-```plantuml
-@startuml
-"REST APIクライアント" -> "SpringFramework/Servlet":
-note over "REST APIクライアント"
-Access Token
-end note
-"SpringFramework/Servlet" -> AuthorizationInformationGetInterceptor:
-note over "SpringFramework/Servlet"
-Access Token
-end note
-AuthorizationInformationGetInterceptor -> ユーザー認証システム: トークン検証
-note right of AuthorizationInformationGetInterceptor
-Access Token
-end note
-note over AuthorizationInformationGetInterceptor
-AuthorizationInformationGetInterceptorは
-SpringのInterceptorとして実装。
-xxxControllerに前処理としてトークン検証を実施し、
-トークンが無効の場合処理を中止する。
-end note
-SpringFramework -> xxxController
-xxxController -> RestCallRepositoryImpl
-note over xxxController
-HTTPリクエストに応じて、forwardGetApi, forwardPutApi, forwardPostApiを呼び出す。
-end note
-RestCallRepositoryImpl -> "蓄電池トレーサビリティ管理システム/データ流通システム"
-note right of RestCallRepositoryImpl
-転送先のURL、およびAPIキーは環境変数から取得。
-end note
-@enduml
-```
+
+<img alt="アプリケーション概要図" src="./docs/images/sequence_diagram.png">
 
 ## ライセンス
 - 本リポジトリはMITライセンスで提供されています。
