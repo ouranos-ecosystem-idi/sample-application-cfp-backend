@@ -18,4 +18,6 @@ public interface RestCallRepository {
 	public ResponseEntity<byte[]> forwardPostApi(String resourcePath, HttpServletRequest request, ApiDestination apiDestination);
 
 	public ResponseEntity<byte[]> forwardPutApi(String resourcePath, HttpServletRequest request, ApiDestination apiDestination);
+
+	public ResponseEntity<byte[]> forwardDeleteApi(String resourcePath, HttpServletRequest request, ApiDestination apiDestination);
 }

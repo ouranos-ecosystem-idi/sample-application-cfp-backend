@@ -3,6 +3,7 @@ package net.ouranos.bts.common.api.datatransport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +36,11 @@ public class DatatransportController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<byte[]> put(HttpServletRequest request) {
 		return restCallRepository.forwardPutApi("api/v1/datatransport", request, ApiDestination.DATA_TRANSPORT_SYSTEM);
+	}
+
+	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<byte[]> delete(HttpServletRequest request) {
+		return restCallRepository.forwardDeleteApi("api/v1/datatransport", request, ApiDestination.DATA_TRANSPORT_SYSTEM);
 	}
 }

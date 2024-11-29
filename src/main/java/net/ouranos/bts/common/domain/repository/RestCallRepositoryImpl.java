@@ -143,6 +143,38 @@ public class RestCallRepositoryImpl implements RestCallRepository {
 		return responseEntity;
 	}
 
+	@Override
+	public ResponseEntity<byte[]> forwardDeleteApi(String resourcePath, HttpServletRequest request,
+			ApiDestination apiDestination) {
+		RequestEntity<Void> requestEntity = createDeleteRequestEntity(resourcePath, request, apiDestination);
+		log.info("トレサビAPのDELETE REST API呼び出し開始。URL={}", requestEntity.getUrl());
+
+		ResponseEntity<byte[]> responseEntity = null;
+		try {
+			// HTTPステータスコード204の場合の処理。
+			responseEntity = restTemplate.exchange(requestEntity, byte[].class);
+			log.info("トレサビAPのDELETE REST API呼び出しで204のレスポンス。URL={}", requestEntity.getUrl());
+		} catch (HttpStatusCodeException e) {
+			// HTTPステータスコードが204以外の場合の処理。
+			log.warn("トレサビAPのDELETE REST API呼び出しで204以外のレスポンス。URL={}", requestEntity.getUrl(), e);
+
+			responseEntity = ResponseEntity
+					.status(e.getStatusCode())
+					.headers(copyHeaders(e.getResponseHeaders()))
+					.body(e.getResponseBodyAsByteArray());
+
+			return responseEntity;
+		}
+
+		responseEntity = ResponseEntity
+				.status(responseEntity.getStatusCode())
+				.headers(copyHeaders(responseEntity.getHeaders()))
+				.body(null);// レスポンスがないため、nullを返却する
+
+		log.info("トレサビAPのDELETE REST API呼び出し正常終了。URL={}", requestEntity.getUrl());
+		return responseEntity;
+	}
+
 	private RequestEntity<Void> createGetRequestEntity(String resourcePath, HttpServletRequest request,
 			ApiDestination apiDestination) {
 
@@ -222,6 +254,29 @@ public class RestCallRepositoryImpl implements RestCallRepository {
 			// ApiGlobalExceptionHandlerクラスで明示的にRuntimeExceptionを処理している。
 			throw new RuntimeException(e);// NOSONAR
 		}
+
+		return requestEntity;
+	}
+
+	private RequestEntity<Void> createDeleteRequestEntity(String resourcePath, HttpServletRequest request,
+			ApiDestination apiDestination) {
+
+		// 元のリクエストのパスを抽出し、転送先のURLに追加する。
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl(getBasePath(apiDestination))
+				.path(resourcePath);
+
+		URI uri = builder
+				.query(request.getQueryString())
+				.build(true)
+				.toUri();
+
+		HttpHeaders headers = createHeader(request, apiDestination);
+
+		RequestEntity<Void> requestEntity = RequestEntity
+				.delete(uri)
+				.headers(headers)
+				.build();
 
 		return requestEntity;
 	}
