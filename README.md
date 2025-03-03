@@ -226,6 +226,7 @@ src/main/resources/META-INF/spring/common-backend-infra.properties に設定す�
 | API_KEY_DATA_TRANSPORT_SYSTEM  | データ流通システム API へのリクエストヘッダに付与する API キーを指定する。 |
 | API_KEY_TRACEABILITY_SYSTEM    | 蓄電池トレーサビリティ管理システム API へのリクエストヘッダに付与する API キーを指定する。 |
 | API_KEY_INTROSPECTION_ENDPOINT | 認証トークンのイントロスペクションに使用するエンドポイントへのリクエストヘッダに付与する API キーを指定する。 |
+| AWS_KMS_KEY_ID                 | 蓄電池トレーサビリティ管理システム API のファイルアップロード用URL取得 API へのリクエストヘッダに付与する AWS KMS キーを指定する。 |
 
 ## 設計標準
 本Javaアプリケーションは TERASOLUNA Server Framework for Java (5.x) を設計標準としており、今後の機能拡張をする場合もこれに準拠する。
@@ -234,7 +235,7 @@ http://terasolunaorg.github.io/guideline/current/ja/
 
 ## コーディング規約
 
-[SonarQube の 現時点の LTS 版 v9.9.2](https://www.sonarsource.com/products/sonarqube/downloads/lts/9-9-lts/) の Sonar way ルールを適用している。
+[SonarQube の 2024年時点の LTS 版 v9.9.2](https://www.sonarsource.com/products/sonarqube/downloads/lts/9-9-lts/) の Sonar way ルールを適用している。
 
 ## 処理概要
 処理の全体像を把握するための概要を説明する。概要把握が目的であるため、シーケンス図は主要なクラスのみを記載している。
